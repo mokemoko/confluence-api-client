@@ -1,4 +1,4 @@
-require "confluence/api/client/version"
+#require "confluence/api/client/version"
 require 'json'
 require 'faraday'
 
@@ -43,6 +43,22 @@ module Confluence
           req.url "rest/api/content/#{id}"
           req.headers['Content-Type'] = 'application/json'
           req.body                    = params.to_json
+        end
+        JSON.parse(response.body)
+      end
+
+      def like(id)
+        response = conn.post do |req|
+          req.url "rest/likes/1.0/content/#{id}/likes"
+          req.headers['Content-Type'] = 'application/json'
+        end
+        JSON.parse(response.body)
+      end
+
+      def unlike(id)
+        response = conn.delete do |req|
+          req.url "rest/likes/1.0/content/#{id}/likes"
+          req.headers['Content-Type'] = 'application/json'
         end
         JSON.parse(response.body)
       end
