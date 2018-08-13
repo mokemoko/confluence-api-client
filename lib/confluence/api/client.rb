@@ -47,6 +47,11 @@ module Confluence
         JSON.parse(response.body)
       end
 
+      def delete(id)
+        response = conn.delete("rest/api/content/#{id}")
+        response.status
+      end
+
       def like(id)
         response = conn.post do |req|
           req.url "rest/likes/1.0/content/#{id}/likes"
